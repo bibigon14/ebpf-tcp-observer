@@ -1,0 +1,22 @@
+# binaries
+/bin/
+/ebpf-tcp-observer
+*.o
+
+# vendor / build artifacts
+vendor/
+dist/
+
+# go
+*.test
+coverage.out
+
+# editor
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# secrets / config
+*.local.yaml
+*.env
