@@ -1,7 +1,6 @@
 # binaries
 /bin/
 /ebpf-tcp-observer
-*.o
 
 # vendor / build artifacts
 vendor/
@@ -21,3 +20,8 @@ coverage.out
 *.local.yaml
 *.env
 bin/
+
+# Go build artifacts (native .o from CGo) - ours are checked in via bpf2go
+# We do not exclude *.o wholesale because internal/collector/*_bpfel.o and
+# *_bpfeb.o are generated eBPF objects that consumers of this repo need
+# for `go build` to work without clang installed.
