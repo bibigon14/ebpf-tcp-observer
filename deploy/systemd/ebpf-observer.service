@@ -1,0 +1,24 @@
+[Unit]
+Description=eBPF TCP Observer - Prometheus exporter
+Documentation=https://github.com/bibigon14/ebpf-tcp-observer
+After=network-online.target wg-quick@wg0.service
+Wants=network-online.target
+Requires=wg-quick@wg0.service
+
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/local/bin/ebpf-observer -listen 10.0.0.4:9100 -stub-interval 10s
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+# Baseline hardening. eBPF caps will be added once the kprobe lands (v1).
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
