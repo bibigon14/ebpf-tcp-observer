@@ -8,14 +8,21 @@ Requires=wg-quick@wg0.service
 [Service]
 Type=simple
 User=root
-ExecStart=/usr/local/bin/ebpf-observer -listen 10.0.0.4:9100 -stub-interval 10s
+ExecStart=/usr/local/bin/ebpf-observer -listen 10.0.0.4:9100 -collector ebpf -poll-interval 1s
 Restart=on-failure
 RestartSec=5
 StandardOutput=journal
 StandardError=journal
 
-# Baseline hardening. eBPF caps will be added once the kprobe lands (v1).
-NoNewPrivileges=true
+# eBPF capabilities: BPF is enough for map ops + program load on 5.11+,
+# PERFMON covers tracing programs, NET_ADMIN is required for some link
+# types. We keep NoNewPrivileges off (systemd default) so cap inheritance
+# to child processes is not blocked; the binary itself has no children.
+AmbientCapabilities=CAP_BPF CAP_PERFMON CAP_NET_ADMIN
+CapabilityBoundingSet=CAP_BPF CAP_PERFMON CAP_NET_ADMIN
+NoNewPrivileges=false
+
+# Filesystem hardening still applies.
 ProtectSystem=strict
 ProtectHome=true
 PrivateTmp=true
