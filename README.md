@@ -1,5 +1,7 @@
 # ebpf-tcp-observer
 
+[![CI](https://github.com/bibigon14/ebpf-tcp-observer/actions/workflows/ci.yml/badge.svg)](https://github.com/bibigon14/ebpf-tcp-observer/actions/workflows/ci.yml)
+
 An eBPF-based agent that observes kernel-level TCP events on a Linux host and
 exports them as Prometheus metrics. Runs as a single Go binary using CO-RE
 (Compile Once, Run Everywhere) via cilium/ebpf - no BCC, no runtime kernel
