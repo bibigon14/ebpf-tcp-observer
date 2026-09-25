@@ -7,4 +7,3 @@
 package collector
 
 //go:generate go run github.com/cilium/ebpf/cmd/bpf2go -cc clang -target native -type u64 tcpRetransmit ../../bpf/tcp_retransmit.c -- -I../../bpf/headers
-
